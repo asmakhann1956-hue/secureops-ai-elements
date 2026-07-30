@@ -159,12 +159,14 @@ If you'd like to improve SecureOps AI:
 
 ## 👨‍💻 Author
 
-**Muhammad Taha Moatesim Billah**
+### Asma Khan Pathan
 
-Cybersecurity Student | SOC & Network Security Enthusiast
+BS Cyber Security Student at Air University, Multan Campus
 
----
+Passionate about Cybersecurity, SOC Operations, Network Security, Digital Forensics, and Blue Teaming.
 
+- 💻 GitHub: https://github.com/asmakhann1956-hue
+- 📧 Email: asmahhkhhann@gmail.com
 ## ⭐ Support
 
 If you found this project useful, consider giving it a ⭐ on GitHub.
