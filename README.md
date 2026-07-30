@@ -1,10 +1,23 @@
+<div align="center">
+
 # 🔐 SecureOps AI
 
-> **AI-Powered Cybersecurity Incident Report Generator**
+### AI-Powered Cybersecurity Incident Report Generator
 
-SecureOps AI is a modern cybersecurity incident reporting application designed to help security teams generate professional incident reports, export them as PDF documents, and send automated email notifications through an intuitive SOC-inspired dashboard.
+Generate professional cybersecurity incident reports, export PDF reports, and send automated email notifications through a modern SOC-inspired dashboard.
+
+<br>
+
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?logo=javascript)
+![EmailJS](https://img.shields.io/badge/EmailJS-Integrated-orange)
+![jsPDF](https://img.shields.io/badge/jsPDF-PDF-red)
+
+</div>
 
 ---
+
 
 ## 🚀 Project Overview
 
