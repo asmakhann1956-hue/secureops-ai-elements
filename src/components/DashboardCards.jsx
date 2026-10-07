@@ -5,52 +5,76 @@ import {
   FaFileSignature,
 } from "react-icons/fa";
 
-function DashboardCards() {
+function DashboardCards({ reportCount = 154 }) {
   const cards = [
     {
-      icon: <FaBug />,
+      icon: <FaBug aria-hidden="true" />,
       title: "Active Incidents",
       value: "24",
-      color: "#3B82F6",
+      accent: "#3B82F6",
+      tag: "Live Feed",
     },
     {
-      icon: <FaShieldVirus />,
+      icon: <FaShieldVirus aria-hidden="true" />,
       title: "Threat Level",
       value: "HIGH",
-      color: "#EF4444",
+      accent: "#EF4444",
+      tag: "DEFCON 2",
     },
     {
-      icon: <FaExclamationTriangle />,
+      icon: <FaExclamationTriangle aria-hidden="true" />,
       title: "Critical Alerts",
       value: "08",
-      color: "#F59E0B",
+      accent: "#F59E0B",
+      tag: "Needs Triage",
     },
     {
-      icon: <FaFileSignature />,
+      icon: <FaFileSignature aria-hidden="true" />,
       title: "Reports Generated",
-      value: "154",
-      color: "#10B981",
+      value: reportCount,
+      accent: "#10B981",
+      tag: "Live Counter",
     },
   ];
 
   return (
-    <div className="cards">
+    <section
+      className="dashboard-cards"
+      id="dashboard-metrics-section"
+      aria-label="SOC Metrics Summary"
+    >
       {cards.map((card, index) => (
         <div className="card" key={index}>
           <div
             className="card-icon"
-            style={{ background: card.color }}
+            style={{
+              background: `${card.accent}22`,
+              color: card.accent,
+              border: `1px solid ${card.accent}44`,
+            }}
           >
             {card.icon}
           </div>
 
-          <div>
-            <h3>{card.value}</h3>
+          <div className="card-info">
+            <div className="card-top-row">
+              <h3>{card.value}</h3>
+              <span
+                className="card-tag"
+                style={{
+                  background: `${card.accent}18`,
+                  color: card.accent,
+                  borderColor: `${card.accent}33`,
+                }}
+              >
+                {card.tag}
+              </span>
+            </div>
             <p>{card.title}</p>
           </div>
         </div>
       ))}
-    </div>
+    </section>
   );
 }
 
