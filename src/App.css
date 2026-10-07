@@ -2001,3 +2001,427 @@ INCIDENT REPORT ENHANCEMENTS
     width:100% !important;
   }
 }
+
+/* =========================================================
+NEW SOC ACTION BUTTONS (JSON, PRINT)
+========================================================= */
+
+.json-btn{
+  background:rgba(16,185,129,.15);
+  color:#34d399;
+  border:1px solid rgba(16,185,129,.35);
+}
+
+.json-btn:hover{
+  background:rgba(16,185,129,.25);
+  transform:translateY(-2px);
+}
+
+.print-btn{
+  background:rgba(255,255,255,.07);
+  color:#e2e8f0;
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.print-btn:hover{
+  background:rgba(255,255,255,.14);
+  transform:translateY(-2px);
+}
+
+/* =========================================================
+GLOBAL SOC TOAST NOTIFICATION
+========================================================= */
+
+.soc-toast-banner{
+  position:fixed;
+  top:24px;
+  right:24px;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 20px;
+  border-radius:14px;
+  backdrop-filter:blur(18px);
+  box-shadow:0 12px 35px rgba(0,0,0,.45);
+  font-size:14px;
+  font-weight:600;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.toast-success{
+  background:rgba(6,78,59,.92);
+  border-color:rgba(52,211,153,.4);
+  color:#ecfdf5;
+}
+
+.toast-info{
+  background:rgba(30,58,138,.92);
+  border-color:rgba(96,165,250,.4);
+  color:#eff6ff;
+}
+
+.toast-error{
+  background:rgba(127,29,29,.92);
+  border-color:rgba(248,113,113,.4);
+  color:#fef2f2;
+}
+
+.toast-dot{
+  color:#34d399;
+  font-size:12px;
+}
+
+.toast-dismiss{
+  background:transparent;
+  border:none;
+  color:rgba(255,255,255,.6);
+  font-size:18px;
+  cursor:pointer;
+  padding:0 4px;
+  margin-left:8px;
+}
+
+.toast-dismiss:hover{
+  color:#fff;
+}
+
+/* =========================================================
+FORM ENHANCEMENTS (SCENARIO PILL, COUNTER)
+========================================================= */
+
+.scenario-pill-alert{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(34,211,238,.12);
+  border:1px solid rgba(34,211,238,.35);
+  border-radius:12px;
+  padding:10px 16px;
+  margin-bottom:18px;
+  font-size:13px;
+  color:#a5f3fc;
+}
+
+.pill-close{
+  background:none;
+  border:none;
+  color:#a5f3fc;
+  cursor:pointer;
+  font-size:18px;
+  margin-left:auto;
+}
+
+.label-with-preview{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.severity-preview-pill{
+  font-size:11.5px;
+  font-weight:700;
+  padding:2px 8px;
+  border-radius:6px;
+}
+
+.preview-pill-critical{ background:rgba(239,68,68,.25); color:#f87171; }
+.preview-pill-high{ background:rgba(249,115,22,.25); color:#fb923c; }
+.preview-pill-medium{ background:rgba(234,179,8,.25); color:#facc15; }
+.preview-pill-low{ background:rgba(16,185,129,.25); color:#34d399; }
+
+.label-with-counter{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.char-counter{
+  font-size:12px;
+  color:#94a3b8;
+  font-family:monospace;
+}
+
+/* =========================================================
+DASHBOARD CARD TAGS
+========================================================= */
+
+.card-top-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+
+.card-tag{
+  font-size:11px;
+  font-weight:700;
+  padding:2px 8px;
+  border-radius:20px;
+  border:1px solid;
+}
+
+/* =========================================================
+NAVBAR NOTIFICATIONS POPOVER
+========================================================= */
+
+.notif-container{
+  position:relative;
+}
+
+.notif-dropdown{
+  position:absolute;
+  top:calc(100% + 14px);
+  right:0;
+  width:320px;
+  padding:18px;
+  z-index:999;
+  background:rgba(15,23,42,.95);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 15px 40px rgba(0,0,0,.5);
+}
+
+.notif-dropdown-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding-bottom:10px;
+  margin-bottom:12px;
+}
+
+.notif-dropdown-header h3{
+  font-size:14px;
+  font-weight:700;
+  color:#f8fafc;
+}
+
+.notif-clear-btn{
+  background:none;
+  border:none;
+  color:#60a5fa;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.notif-clear-btn:hover{
+  text-decoration:underline;
+}
+
+.notif-item{
+  padding:10px;
+  border-radius:10px;
+  background:rgba(255,255,255,.03);
+  margin-bottom:8px;
+  border-left:3px solid #3b82f6;
+}
+
+.notif-item.sev-critical{
+  border-left-color:#ef4444;
+}
+
+.notif-item.sev-success{
+  border-left-color:#10b981;
+}
+
+.notif-item-top{
+  display:flex;
+  justify-content:space-between;
+  font-size:12.5px;
+  margin-bottom:3px;
+}
+
+.notif-item-time{
+  font-size:11px;
+  color:#94a3b8;
+}
+
+.notif-item-desc{
+  font-size:12px;
+  color:#cbd5e1;
+  line-height:1.4;
+}
+
+.notif-empty{
+  text-align:center;
+  padding:20px;
+  color:#94a3b8;
+  font-size:13px;
+}
+
+.check-all-icon{
+  font-size:24px;
+  color:#10b981;
+  margin-bottom:6px;
+}
+
+/* =========================================================
+SETTINGS MODAL
+========================================================= */
+
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  backdrop-filter:blur(6px);
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.settings-modal{
+  max-width:480px;
+  width:100%;
+  padding:28px;
+  background:rgba(15,23,42,.98);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:22px;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.modal-header h3{
+  font-size:18px;
+  font-weight:700;
+  color:#fff;
+}
+
+.modal-close-btn{
+  background:none;
+  border:none;
+  color:#94a3b8;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.setting-row{
+  margin-bottom:16px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.setting-row label{
+  font-size:13.5px;
+  color:#cbd5e1;
+  font-weight:600;
+}
+
+.setting-row select{
+  padding:10px 14px;
+  border-radius:10px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  color:#fff;
+  font-size:14px;
+}
+
+.setting-row-checkbox{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.setting-row-checkbox label{
+  font-size:13.5px;
+  color:#cbd5e1;
+  cursor:pointer;
+}
+
+.setting-info-box{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  padding:12px;
+  border-radius:10px;
+  font-size:12.5px;
+  color:#94a3b8;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+.modal-footer{
+  display:flex;
+  justify-content:flex-end;
+}
+
+.modal-done-btn{
+  width:100%;
+}
+
+/* =========================================================
+KEYBOARD ACCESSIBILITY
+========================================================= */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline:2px solid #38bdf8;
+  outline-offset:2px;
+}
+
+/* =========================================================
+PRINT STYLESHEET (CLEAN WHITE EXECUTIVE BRIEFING)
+========================================================= */
+
+@media print{
+  body{
+    background:#ffffff !important;
+    color:#0f172a !important;
+  }
+
+  .sidebar,
+  .navbar,
+  .hero,
+  .dashboard-cards,
+  .incident-form,
+  .report-actions,
+  .soc-toast-banner,
+  .modal-backdrop{
+    display:none !important;
+  }
+
+  .app{
+    display:block !important;
+  }
+
+  .main-content{
+    padding:0 !important;
+  }
+
+  .incident-report{
+    background:none !important;
+    border:none !important;
+    box-shadow:none !important;
+    color:#0f172a !important;
+    padding:0 !important;
+  }
+
+  .report-section{
+    background:#f8fafc !important;
+    border:1px solid #cbd5e1 !important;
+    color:#0f172a !important;
+    page-break-inside:avoid;
+  }
+
+  .report-table td{
+    color:#0f172a !important;
+    border-bottom:1px solid #e2e8f0 !important;
+  }
+
+  .report-header h2,
+  .report-section h3{
+    color:#0f172a !important;
+  }
+}

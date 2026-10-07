@@ -12,6 +12,8 @@ import {
   FaWrench,
   FaBullseye,
   FaInfoCircle,
+  FaCode,
+  FaPrint,
 } from "react-icons/fa";
 import jsPDF from "jspdf";
 import emailjs from "@emailjs/browser";
@@ -134,7 +136,7 @@ const DEFAULT_INTELLIGENCE = {
   ],
 };
 
-function IncidentReport({ reportData }) {
+function IncidentReport({ reportData, onNotify }) {
   const [copied, setCopied] = useState(false);
   const [sendingEmail, setSendingEmail] = useState(false);
   const [emailStatus, setEmailStatus] = useState(null);
@@ -211,10 +213,60 @@ Date: ${new Date().toLocaleString()}
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
+      if (onNotify) {
+        onNotify("Report copied to clipboard", "success");
+      }
       setTimeout(() => setCopied(false), 3000);
     } catch {
       alert("Failed to copy to clipboard");
     }
+  };
+
+  // ================= EXPORT JSON (STIX) =================
+  const exportJSON = () => {
+    if (!reportData) return;
+    const exportPayload = {
+      spec_version: "2.1",
+      type: "incident-report",
+      id: `incident--${Date.now()}`,
+      created: new Date().toISOString(),
+      company: reportData.company || "N/A",
+      reporter: {
+        name: reportData.reporter || "N/A",
+        email: reportData.email || "N/A",
+      },
+      incident_type: reportData.incidentType || "Security Incident",
+      severity: reportData.severity || "Medium",
+      affected_system: reportData.system || "N/A",
+      incident_date: reportData.date || new Date().toISOString(),
+      description: reportData.description || "",
+      mitre_attack_techniques: intelligence.tactics,
+      containment_playbook: intelligence.containment,
+      remediation_recommendations: intelligence.remediation,
+      classification: "TLP:AMBER - CONFIDENTIAL",
+      generated_by: "SecureOps AI Operations Center",
+    };
+
+    const blob = new Blob([JSON.stringify(exportPayload, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `SecureOps-${(reportData.incidentType || "Incident").replace(/\s+/g, "_")}-${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    if (onNotify) {
+      onNotify("STIX/JSON telemetry exported", "success");
+    }
+  };
+
+  // ================= PRINT REPORT =================
+  const handlePrint = () => {
+    window.print();
   };
 
   // ================= DOWNLOAD FORMATTED PDF =================
@@ -358,6 +410,9 @@ Date: ${new Date().toLocaleString()}
       "_"
     )}-${Date.now()}.pdf`;
     pdf.save(filename);
+    if (onNotify) {
+      onNotify("Executive PDF report generated", "success");
+    }
   };
 
   // ================= SEND EMAIL =================
@@ -383,12 +438,18 @@ Date: ${new Date().toLocaleString()}
 
       await emailjs.send(serviceId, templateId, templateParams, publicKey);
       setEmailStatus({ type: "success", text: "Email notification dispatched successfully!" });
+      if (onNotify) {
+        onNotify("Stakeholder alert email dispatched", "success");
+      }
     } catch (error) {
       console.error(error);
       setEmailStatus({
         type: "error",
         text: `Email delivery failed: ${error?.text || error?.message || "Check EmailJS setup"}`,
       });
+      if (onNotify) {
+        onNotify("Email dispatch failed - verify configuration", "error");
+      }
     } finally {
       setSendingEmail(false);
       setTimeout(() => setEmailStatus(null), 5000);
@@ -398,12 +459,16 @@ Date: ${new Date().toLocaleString()}
   // ================= EMPTY STATE =================
   if (!reportData) {
     return (
-      <div className="incident-report glass-card empty-report-card" id="incident-report-section">
+      <section
+        className="incident-report glass-card empty-report-card"
+        id="incident-report-section"
+        aria-labelledby="empty-report-heading"
+      >
         <div className="empty-state-content">
-          <div className="empty-icon-circle">
+          <div className="empty-icon-circle" aria-hidden="true">
             <FaShieldAlt />
           </div>
-          <h3>Awaiting Incident Submission</h3>
+          <h3 id="empty-report-heading">Awaiting Incident Submission</h3>
           <p>
             Complete the form on the left or click <strong>Load Sample Data</strong> to generate
             an AI-powered executive report, MITRE ATT&CK mapping, containment checklist, and PDF
@@ -415,19 +480,23 @@ Date: ${new Date().toLocaleString()}
             <span>📄 Print-Ready Executive PDF</span>
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 
   const severityClass = (reportData.severity || "medium").toLowerCase();
 
   return (
-    <div className="incident-report glass-card fade-in" id="incident-report-section">
+    <section
+      className="incident-report glass-card fade-in"
+      id="incident-report-section"
+      aria-labelledby="report-main-heading"
+    >
       {/* ================= HEADER & ACTIONS ================= */}
       <div className="report-header">
         <div className="report-title-block">
-          <h2>
-            <FaFileAlt /> Incident Report
+          <h2 id="report-main-heading">
+            <FaFileAlt aria-hidden="true" /> Incident Report
           </h2>
           <span className={`severity-badge badge-${severityClass}`}>
             {reportData.severity || "Medium"} Severity
@@ -439,9 +508,30 @@ Date: ${new Date().toLocaleString()}
             className={`action-pill-btn copy-btn ${copied ? "copied" : ""}`}
             onClick={copyReportText}
             title="Copy full report as formatted text"
+            aria-label="Copy report text to clipboard"
           >
-            {copied ? <FaCheck /> : <FaCopy />}
+            {copied ? <FaCheck aria-hidden="true" /> : <FaCopy aria-hidden="true" />}
             {copied ? "Copied!" : "Copy Report"}
+          </button>
+
+          <button
+            className="action-pill-btn json-btn"
+            onClick={exportJSON}
+            title="Export incident telemetry as JSON / STIX format"
+            aria-label="Export incident telemetry as JSON"
+          >
+            <FaCode aria-hidden="true" />
+            JSON
+          </button>
+
+          <button
+            className="action-pill-btn print-btn"
+            onClick={handlePrint}
+            title="Print executive briefing"
+            aria-label="Print executive briefing"
+          >
+            <FaPrint aria-hidden="true" />
+            Print
           </button>
 
           <button
@@ -449,8 +539,9 @@ Date: ${new Date().toLocaleString()}
             onClick={sendEmail}
             disabled={sendingEmail}
             title="Send email alert via EmailJS"
+            aria-label="Send email notification"
           >
-            <FaEnvelope />
+            <FaEnvelope aria-hidden="true" />
             {sendingEmail ? "Sending..." : "Send Email"}
           </button>
 
@@ -458,8 +549,9 @@ Date: ${new Date().toLocaleString()}
             className="action-pill-btn download-btn"
             onClick={downloadPDF}
             title="Download executive PDF"
+            aria-label="Download executive PDF"
           >
-            <FaDownload />
+            <FaDownload aria-hidden="true" />
             Download PDF
           </button>
         </div>
@@ -665,7 +757,7 @@ Date: ${new Date().toLocaleString()}
           <strong>Generated On:</strong> {new Date().toLocaleString()}
         </p>
       </div>
-    </div>
+    </section>
   );
 }
 
